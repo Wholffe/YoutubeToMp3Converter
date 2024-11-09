@@ -13,7 +13,7 @@ def open_folder(window, folder_path):
     if os.path.exists(folder_path):
         os.system(f'Explorer "{folder_path}"')
     else:
-        window['output'].print(f'The folder does not exist: {folder_path}')
+        window[CONST.KEY_OUTPUT].print(f'The folder does not exist: {folder_path}')
 
 def is_valid_youtube_url(url):
     youtube_url_patterns = [
@@ -30,9 +30,9 @@ def check_if_dir_exists(window, path):
     if not os.path.exists(path):
         try:
             os.makedirs(path)
-            window['output'].print(f'{CONST.MESSAGE_PATH_CREATED} {path}')
+            window[CONST.KEY_OUTPUT].print(f'{CONST.MESSAGE_PATH_CREATED} {path}')
         except OSError as e:
-            window['output'].print(f'{CONST.ERROR_CREATING_PATH} {path}: {e}')
+            window[CONST.KEY_OUTPUT].print(f'{CONST.ERROR_CREATING_PATH} {path}: {e}')
     return path
 
 def get_only_audio_stream(youtube_link: str):
@@ -45,7 +45,7 @@ def convert_to_mp3_and_remove_double_data(window, file_path: str) -> None:
     base, _ = os.path.splitext(file_path)
     new_file = base + '.mp3'
     if os.path.exists(new_file):
-        window['output'].print(CONST.MESSAGE_FILE_EXISTS)
+        window[CONST.KEY_OUTPUT].print(CONST.MESSAGE_FILE_EXISTS)
     else:
         os.rename(file_path,new_file)
 
@@ -53,7 +53,7 @@ def start_download(window, video_url, destination_folder):
     try:
         youtube_link = YouTube(video_url)
         destination_folder = check_if_dir_exists(window, destination_folder)
-        window['output'].print(f'{CONST.MESSAGE_DOWNLOADING} {youtube_link.title} as mp3')
+        window[CONST.KEY_OUTPUT].print(f'{CONST.MESSAGE_DOWNLOADING} {youtube_link.title} as mp3')
         window['progress_bar'].update_bar(20) 
         only_audio_stream = get_only_audio_stream(youtube_link)
         window['progress_bar'].update_bar(30) 
@@ -61,11 +61,11 @@ def start_download(window, video_url, destination_folder):
         window['progress_bar'].update_bar(60) 
         convert_to_mp3_and_remove_double_data(window, out_file)
         window['progress_bar'].update_bar(70) 
-        window['output'].print(CONST.MESSAGE_DOWNLOADING_COMPLETED)
-        window['output'].print(f'{CONST.MESSAGE_DEST_FOLDER} {destination_folder}')
+        window[CONST.KEY_OUTPUT].print(CONST.MESSAGE_DOWNLOADING_COMPLETED)
+        window[CONST.KEY_OUTPUT].print(f'{CONST.MESSAGE_DEST_FOLDER} {destination_folder}')
         window['progress_bar'].update_bar(100) 
     except Exception as e:
-        window['output'].print(f'{CONST.ERROR_DOWNLOAD_FAILED} {str(e)}')
+        window[CONST.KEY_OUTPUT].print(f'{CONST.ERROR_DOWNLOAD_FAILED} {str(e)}')
 
 def download_thread(window, video_url, destination_folder):
     threading.Thread(target=start_download, args=(window, video_url, destination_folder)).start()

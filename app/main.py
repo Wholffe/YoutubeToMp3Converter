@@ -1,10 +1,10 @@
 import PySimpleGUI as sgui
 from utils import get_default_dir, open_folder, is_valid_youtube_url, download_thread
-from ui import create_window
+import ui
 import constants as CONST
 
 destination_dir = get_default_dir()
-window = create_window()
+window = ui.create_window()
 
 running = True
 while running:
@@ -17,7 +17,7 @@ while running:
     destination_folder = values['destination_folder']
 
     if event == 'Open Destination Folder':
-        window["output"].print(CONST.MESSAGE_OPEN_DEST_FOLDER)
+        window[CONST.KEY_OUTPUT].print(CONST.MESSAGE_OPEN_DEST_FOLDER)
         open_folder(window, destination_folder)
 
     if event == 'Download':
@@ -33,6 +33,6 @@ while running:
             window['progress_bar'].update_bar(0)
             download_thread(window, video_url, destination_folder)
 
-        window['output'].update(console_output)
+        window[ui.KEY_OUTPUT].update(console_output)
 
 window.close()
