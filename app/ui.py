@@ -1,14 +1,8 @@
-import os
 import PySimpleGUI as sg
-from translations import translations
+from utils import get_default_dir
 
 def create_window():
     progress_bar = sg.ProgressBar(100, orientation='h', size=(20, 20), key='progress_bar')
-
-    def get_default_dir():
-        # You can modify this default directory as per your requirements
-        return os.path.join(os.getcwd(), "YT_Downloads")
-
     destination_dir = get_default_dir()
 
     layout = [
