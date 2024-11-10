@@ -5,7 +5,6 @@ from pytubefix import YouTube
 import constants as CONST
 
 def get_default_dir():
-    #set_working_directory()  # Set the working directory first
     parent_directory = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(parent_directory, 'YT_Downloads')
 
