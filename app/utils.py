@@ -1,8 +1,10 @@
+from pytubefix import YouTube
 import os
 import re
 import threading
-from pytubefix import YouTube
+
 import constants as CONST
+
 
 def get_default_dir():
     parent_directory = os.path.dirname(os.path.abspath(__file__))
@@ -12,7 +14,7 @@ def open_folder(window, folder_path):
     if os.path.exists(folder_path):
         os.system(f'Explorer "{folder_path}"')
     else:
-        window[CONST.KEY_OUTPUT].print(f'The folder does not exist: {folder_path}')
+        window[CONST.KEY_OUTPUT].print(f'{CONST.ERROR_FOLDER_DOES_NOT_EXIST}: {folder_path}')
 
 def is_valid_youtube_url(url):
     youtube_url_patterns = [
@@ -53,21 +55,16 @@ def start_download(window, video_url, destination_folder):
         youtube_link = YouTube(video_url)
         destination_folder = check_if_dir_exists(window, destination_folder)
         window[CONST.KEY_OUTPUT].print(f'{CONST.MESSAGE_DOWNLOADING} {youtube_link.title} as mp3')
-        window[CONST.KEY_PROGRESS_BAR].update_bar(20) 
+        window[CONST.KEY_PROGRESS_BAR].update_bar(10) 
         only_audio_stream = get_only_audio_stream(youtube_link)
-        window[CONST.KEY_PROGRESS_BAR].update_bar(30) 
         out_file = download_mp3_from_ytlink(only_audio_stream, destination_folder)
         window[CONST.KEY_PROGRESS_BAR].update_bar(60) 
         convert_to_mp3_and_remove_double_data(window, out_file)
-        window[CONST.KEY_PROGRESS_BAR].update_bar(70) 
+        window[CONST.KEY_PROGRESS_BAR].update_bar(100) 
         window[CONST.KEY_OUTPUT].print(CONST.MESSAGE_DOWNLOADING_COMPLETED)
         window[CONST.KEY_OUTPUT].print(f'{CONST.MESSAGE_DEST_FOLDER} {destination_folder}')
-        window[CONST.KEY_PROGRESS_BAR].update_bar(100) 
     except Exception as e:
         window[CONST.KEY_OUTPUT].print(f'{CONST.ERROR_DOWNLOAD_FAILED} {str(e)}')
 
 def download_thread(window, video_url, destination_folder):
     threading.Thread(target=start_download, args=(window, video_url, destination_folder)).start()
-
-def get_default_dir():
-    return os.path.join(os.getcwd(), 'YT_Downloads')

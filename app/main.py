@@ -1,6 +1,7 @@
 from utils import open_folder, is_valid_youtube_url, download_thread
-import ui
 import constants as CONST
+import ui
+
 
 def main():
     window = ui.create_window()
@@ -16,7 +17,6 @@ def main():
         destination_folder = values[CONST.KEY_DEST_FOLDER]
 
         if event == CONST.KEY_OPEN_DEST_FOLDER:
-            window[CONST.KEY_OUTPUT].print(CONST.MESSAGE_OPEN_DEST_FOLDER)
             open_folder(window, destination_folder)
 
         if event == CONST.KEY_DOWNLOAD:
