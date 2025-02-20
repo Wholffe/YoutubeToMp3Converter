@@ -1,1 +1,2 @@
 PYQt6
+yt_dlp

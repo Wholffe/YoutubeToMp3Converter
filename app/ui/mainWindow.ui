@@ -29,7 +29,7 @@
       <property name="bottomMargin">
        <number>30</number>
       </property>
-      <item row="1" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+      <item row="2" column="0" alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QPushButton" name="buttonDownload">
         <property name="enabled">
          <bool>false</bool>
@@ -39,10 +39,17 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="QLineEdit" name="lineEditVideoUrl">
         <property name="placeholderText">
          <string>Video URL</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>24</number>
         </property>
        </widget>
       </item>
