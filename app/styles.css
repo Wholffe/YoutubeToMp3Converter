@@ -1,0 +1,25 @@
+QPushButton#buttonDownload {
+    background-color: #0078D7;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-size: 14px;
+    min-height: 40px;
+}
+QPushButton#buttonDownload:hover {
+    background-color: #005A9E;
+}
+QPushButton#buttonDownload:disabled {
+    background-color: #9e1500;
+}
+
+QLineEdit#lineEditVideoUrl {
+    padding: 15px 10px;
+    font-size: 16px;
+    border: 2px solid #0078D7;
+    border-radius: 10px;
+}
+
+QProgressBar {
+    border-radius: 10px;
+}
