@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtGui import QColor
+from PyQt6.QtGui import QColor,QDesktopServices
+from PyQt6.QtCore import QUrl
 from PyQt6 import uic
 
 from downloader import Downloader
@@ -16,6 +17,7 @@ class MainWindow(QMainWindow):
         self.lineEditVideoUrl.textChanged.connect(self.onTextChanged)
         self.lineEditVideoUrl.setFocus()
         self.buttonDownload.clicked.connect(self.onDownloadClicked)
+        self.actionOpenCurrentPath.triggered.connect(self.openCurrentPath)
         self.actionSettings.triggered.connect(self.openSettings)
         self.progressBar.hide()
         self.downloader = Downloader()
@@ -29,6 +31,9 @@ class MainWindow(QMainWindow):
     def openSettings(self):
         self.settingsDialog.show()
         self.showDownloadPath()
+    
+    def openCurrentPath(self):
+        QDesktopServices.openUrl(QUrl(self.downloader.download_path))
 
     def onTextChanged(self, text):
         ok = any(text.startswith(base) for base in self.baseUrl) and (text != self.downloader.current_download_url)
