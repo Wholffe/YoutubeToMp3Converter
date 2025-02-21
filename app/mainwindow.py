@@ -1,18 +1,19 @@
 import os
 from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtGui import QColor
-from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QColor,QIcon
 from PyQt6 import uic
 
+from pathmgt import resource_path
 from downloader import Downloader
 from settingsDialog import SettingsDialog
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("app/ui/mainWindow.ui", self)
-        with open("app/styles.css", "r") as f:
+        uic.loadUi(resource_path("ui/mainWindow.ui"), self)
+        with open(resource_path("styles.css"), "r") as f:
             self.setStyleSheet(f.read())
+        self.setWindowIcon(QIcon(resource_path("resources/window_icon.png")))
         self.comboBoxFormat.addItems(["WebM"])
         self.comboBoxQuality.addItems(["Audio Only"])
         self.lineEditVideoUrl.textChanged.connect(self.onTextChanged)

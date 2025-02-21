@@ -1,11 +1,14 @@
 from PyQt6.QtWidgets import QDialog,QFileDialog
 from PyQt6 import uic
 
+from pathmgt import resource_path
+
+
 class SettingsDialog(QDialog):
     def __init__(self,downloader):
         super().__init__()
-        uic.loadUi("app/ui/settingsDialog.ui", self)
-        with open("app/styles.css", "r") as f:
+        uic.loadUi(resource_path("ui/settingsDialog.ui"), self)
+        with open(resource_path("styles.css"), "r") as f:
             self.setStyleSheet(f.read())
         self.downloader = downloader
         self.lineEditCurrentPath.setText(self.downloader.download_path)
