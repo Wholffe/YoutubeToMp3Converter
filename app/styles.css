@@ -19,7 +19,3 @@ QLineEdit#lineEditVideoUrl {
     border: 2px solid #0078D7;
     border-radius: 10px;
 }
-
-QProgressBar {
-    border-radius: 10px;
-}
