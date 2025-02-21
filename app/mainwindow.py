@@ -1,5 +1,6 @@
+import os
 from PyQt6.QtWidgets import QMainWindow
-from PyQt6.QtGui import QColor,QDesktopServices
+from PyQt6.QtGui import QColor
 from PyQt6.QtCore import QUrl
 from PyQt6 import uic
 
@@ -33,8 +34,8 @@ class MainWindow(QMainWindow):
         self.showDownloadPath()
     
     def openCurrentPath(self):
-        QDesktopServices.openUrl(QUrl(self.downloader.download_path))
-
+        os.startfile(self.downloader.download_path)
+        
     def onTextChanged(self, text):
         ok = any(text.startswith(base) for base in self.baseUrl) and (text != self.downloader.current_download_url)
         self.buttonDownload.setEnabled(ok)
