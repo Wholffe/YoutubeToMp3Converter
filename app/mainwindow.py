@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
         with open(resource_path("styles.css"), "r") as f:
             self.setStyleSheet(f.read())
         self.setWindowIcon(QIcon(resource_path("resources/window_icon.png")))
-        self.comboBoxFormat.addItems(["WebM"])
+        self.comboBoxFormat.addItems(["WebM","mp3","mp4"])
         self.comboBoxQuality.addItems(["Audio Only"])
         self.lineEditVideoUrl.textChanged.connect(self.onTextChanged)
         self.lineEditVideoUrl.setFocus()
@@ -35,7 +35,10 @@ class MainWindow(QMainWindow):
         self.showDownloadPath()
     
     def openCurrentPath(self):
-        os.startfile(self.downloader.download_path)
+        try:
+            os.startfile(self.downloader.download_path)
+        except Exception as e:
+            self.appendText(f"Error: {e}", "red")
         
     def onTextChanged(self, text):
         ok = any(text.startswith(base) for base in self.baseUrl) and (text != self.downloader.current_download_url)
@@ -45,7 +48,8 @@ class MainWindow(QMainWindow):
         self.buttonDownload.setEnabled(False)
         self.appendText(f"Start download ...'{self.lineEditVideoUrl.text()}'")
         self.progressBar.show()
-        self.downloader.download(self.lineEditVideoUrl.text(), self.downloader.download_path, self.update_progress)
+        fileFormat =  str(self.comboBoxFormat.currentText())
+        self.downloader.download(self.lineEditVideoUrl.text(), fileFormat, self.update_progress)
 
     def update_progress(self, percent, message=None):
         if message and "Error" in message:
