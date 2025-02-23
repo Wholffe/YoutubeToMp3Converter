@@ -7,6 +7,7 @@ from pathmgt import resource_path
 from downloader import Downloader
 from settingsDialog import SettingsDialog
 
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -14,8 +15,8 @@ class MainWindow(QMainWindow):
         with open(resource_path("styles.css"), "r") as f:
             self.setStyleSheet(f.read())
         self.setWindowIcon(QIcon(resource_path("resources/window_icon.png")))
-        self.comboBoxFormat.addItems(["WebM","mp3","mp4"])
-        self.comboBoxQuality.addItems(["Audio Only"])
+        self.comboBoxFormat.addItems(["webm","mp3","mp4"])
+        self.comboBoxQuality.addItems(["Audio Only","Video+Audio"])
         self.lineEditVideoUrl.textChanged.connect(self.onTextChanged)
         self.lineEditVideoUrl.setFocus()
         self.buttonDownload.clicked.connect(self.onDownloadClicked)
@@ -49,7 +50,8 @@ class MainWindow(QMainWindow):
         self.appendText(f"Start download ...'{self.lineEditVideoUrl.text()}'")
         self.progressBar.show()
         fileFormat =  str(self.comboBoxFormat.currentText())
-        self.downloader.download(self.lineEditVideoUrl.text(), fileFormat, self.update_progress)
+        comboBoxQuality = str(self.comboBoxQuality.currentText())
+        self.downloader.download(self.lineEditVideoUrl.text(), fileFormat, comboBoxQuality, self.update_progress)
 
     def update_progress(self, percent, message=None):
         if message and "Error" in message:
