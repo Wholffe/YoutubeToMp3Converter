@@ -14,7 +14,7 @@ QPushButton#buttonDownload:disabled {
 }
 
 QLineEdit#lineEditVideoUrl {
-    padding: 15px 10px;
+    padding: 5px;
     font-size: 16px;
     border: 2px solid #0078D7;
     border-radius: 10px;
